@@ -39,8 +39,7 @@ window.onload = () => {
 const allImages = document.querySelectorAll('.image');
 const allDots = document.querySelectorAll('.nav-dots');
 
-// click 'next' button to show next image
-nextBtn.addEventListener('click', () => {
+const moveToNext = () => {
     const shownImage = document.querySelector('.shown');
     const currentId = Number(shownImage.id[5]);
     let nextId = currentId + 1;
@@ -58,7 +57,26 @@ nextBtn.addEventListener('click', () => {
     };
     nextImage.classList.replace('right', 'shown');
     moveDots(nextId);
+}
+
+// move dot according to image change
+const moveDots = (nextId) => {
+    for (dot of allDots) {
+        const dotId = Number(dot.id[3]);
+        if (dotId === nextId) {
+            dot.classList.add('current-dot');
+        } else {
+            dot.classList.remove('current-dot')
+        }
+    };
+};
+
+// click 'next' button to show next image
+nextBtn.addEventListener('click', () => {
+    moveToNext();
 });
+
+setInterval(moveToNext, 5000);
 
 // click 'previous' button to show previous image
 prevBtn.addEventListener('click', () => {
@@ -103,14 +121,3 @@ for (let i = 0; i < allDots.length; i++) {
     });
 };
 
-// move dot according to image change
-const moveDots = (nextId) => {
-    for (dot of allDots) {
-        const dotId = Number(dot.id[3]);
-        if (dotId === nextId) {
-            dot.classList.add('current-dot');
-        } else {
-            dot.classList.remove('current-dot')
-        }
-    };
-};
